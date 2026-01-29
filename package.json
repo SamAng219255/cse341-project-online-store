@@ -1,0 +1,37 @@
+{
+  "name": "cse341-project-online-store",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "lint": "eslint --fix .",
+    "swagger": "node ./swagger/swagger.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SamAng219255/cse341-project-online-store.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SamAng219255/cse341-project-online-store/issues"
+  },
+  "homepage": "https://github.com/SamAng219255/cse341-project-online-store#readme",
+  "dependencies": {
+    "body-parser": "^2.2.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "mongoose": "^9.1.5",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^2.0.0",
+    "@eslint/eslintrc": "^3.3.3",
+    "@eslint/js": "^9.39.1",
+    "@stylistic/eslint-plugin": "^5.6.1",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "swagger-autogen": "^2.23.7"
+  }
+}
