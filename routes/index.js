@@ -3,7 +3,7 @@ const router = express.Router();
 
 //router.use("/user/", require("./user"));
 
-router.use("/product/", require("./product"));
+router.use("/product/", require("./products"));
 
 //router.use("/order/", require("./order"));
 
