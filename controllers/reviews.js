@@ -1,4 +1,4 @@
-const reviewsModel = require("../models/example");
+const reviewsModel = require("../models/reviews");
 const { DBNotReadyError, InvalidDataError, NotFoundError, ConflictingValueError } = require("../error_types");
 
 const getReviewById = async(req, res, next) => {
@@ -178,7 +178,6 @@ const deleteReview = async(req, res, next) => {
 		if(req.params.reviewId == undefined)
 			throw new InvalidDataError();
 
-		await tasksModel.removeTasksByReview(req.params.reviewId);
 		await reviewsModel.deleteReview(req.params.reviewId);
 	}
 	/*
@@ -200,14 +199,6 @@ const deleteReview = async(req, res, next) => {
 			console.error(`deleteReview: ${err.name}: ${err.message}`);
 			res.sendStatus(500);
 		}
-	}
-	try {
-		req.logout(function(err) {
-			if(err) return next(err);
-		});
-	}
-	finally {
-		req.session.destroy();
 	}
 	res.sendStatus(204);
 };

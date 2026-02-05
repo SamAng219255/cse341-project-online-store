@@ -1,4 +1,4 @@
-const productsModel = require("../models/example");
+const productsModel = require("../models/products");
 const { DBNotReadyError, InvalidDataError, NotFoundError, ConflictingValueError } = require("../error_types");
 
 const getProductById = async(req, res, next) => {
@@ -188,7 +188,7 @@ const deleteProduct = async(req, res, next) => {
 		if(req.params.productId == undefined)
 			throw new InvalidDataError();
 
-		await tasksModel.removeTasksByProduct(req.params.productId);
+		//await reviewssModel.removeReviewsByProduct(req.params.productId);
 		await productsModel.deleteProduct(req.params.productId);
 	}
 	/*
@@ -210,14 +210,6 @@ const deleteProduct = async(req, res, next) => {
 			console.error(`deleteProduct: ${err.name}: ${err.message}`);
 			res.sendStatus(500);
 		}
-	}
-	try {
-		req.logout(function(err) {
-			if(err) return next(err);
-		});
-	}
-	finally {
-		req.session.destroy();
 	}
 	res.sendStatus(204);
 };

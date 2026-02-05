@@ -6,10 +6,10 @@ router.get("/", reviewsController.getAllReviews);
 
 router.post("/", reviewsController.createReview);
 
-router.get("/{id}", reviewsController.getReviewById);
+router.get("/:reviewId", reviewsController.getReviewById);
 
-router.put("/{id}", reviewsController.updateReview);
+router.put("/:reviewId", reviewsController.updateReview);
 
-router.delete("/{id}", reviewsController.deleteReview);
+router.delete("/:reviewId", reviewsController.deleteReview);
 
 module.exports = router;
