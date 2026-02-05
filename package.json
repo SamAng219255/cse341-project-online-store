@@ -1,26 +1,30 @@
 {
   "name": "cse341-project-online-store",
   "version": "1.0.0",
-  "description": "",
+  "description": "[Live Site](https://cse341-project-online-store.onrender.com/api-docs)",
+  "homepage": "https://github.com/SamAng219255/cse341-project-online-store#readme",
+  "bugs": {
+    "url": "https://github.com/SamAng219255/cse341-project-online-store/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SamAng219255/cse341-project-online-store.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "lint": "eslint --fix .",
     "swagger": "node ./swagger/swagger.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SamAng219255/cse341-project-online-store.git"
-  },
-  "bugs": {
-    "url": "https://github.com/SamAng219255/cse341-project-online-store/issues"
-  },
-  "homepage": "https://github.com/SamAng219255/cse341-project-online-store#readme",
   "dependencies": {
     "body-parser": "^2.2.2",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "mongodb": "^7.1.0",
     "mongoose": "^9.1.5",
     "swagger-ui-express": "^5.0.1"
   },
