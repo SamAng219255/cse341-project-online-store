@@ -2,7 +2,6 @@
 const router = require('express').Router();
 const ordersController = require('../controllers/orders');
 
-router.get("/{id}", controller.getExample);
 router.get('/', ordersController.getAllOrders);
 router.get('/:id', ordersController.getSingleOrder);
 router.post('/', ordersController.createOrder);
