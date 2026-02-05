@@ -1,4 +1,4 @@
-const model = require("../models/orders");
+const ordersModel = require("../models/orders");
 const { DBNotReadyError, InvalidDataError, NotFoundError, ConflictingValueError } = require("../error_types");
 
 const getSingleOrder = async(req, res, next) => {
@@ -20,6 +20,8 @@ const getSingleOrder = async(req, res, next) => {
 		}
 		#swagger.responses[503] = { description: 'Server still turning on and not yet connected to database.' }
 		#swagger.responses[400] = { description: 'Client provided an invalid order id.' }
+		#swagger.responses[401] = { description: 'Attempted to access the endpoint without authenticating.' }
+		#swagger.responses[403] = { description: 'Attempted to access the endpoint without matching authorization.' }
 		#swagger.responses[404] = { description: 'No order with the provided id exists.' }
 	*/
 
@@ -60,6 +62,8 @@ const getAllOrders = async(req, res, next) => {
 			}]
 		}
 		#swagger.responses[503] = { description: 'Server still turning on and not yet connected to database.' }
+		#swagger.responses[401] = { description: 'Attempted to access the endpoint without authenticating.' }
+		#swagger.responses[403] = { description: 'Attempted to access the endpoint without matching authorization.' }
 	*/
 	catch(err) {
 		if(err instanceof DBNotReadyError)

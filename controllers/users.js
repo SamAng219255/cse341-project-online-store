@@ -1,4 +1,4 @@
-const model = require("../models/users");
+const usersModel = require("../models/users");
 const { DBNotReadyError, InvalidDataError, NotFoundError, ConflictingValueError } = require("../error_types");
 
 const getSingleUser = async(req, res, next) => {
@@ -14,13 +14,19 @@ const getSingleUser = async(req, res, next) => {
 			description: 'User found and returned.',
 			schema: {
 				id: "000000000000000000000000",
-				name: "John Doe",
-				email: "user@example.com"
+				fname: "John",
+				lname: "Doe",
+				email: "user@example.com",
+				githubId: "00000000",
+				address: "123 example rd, anywhere US",
+				type: "customer"
 			}
 		}
 		#swagger.responses[503] = { description: 'Server still turning on and not yet connected to database.' }
 		#swagger.responses[400] = { description: 'Client provided an invalid user id.' }
 		#swagger.responses[404] = { description: 'No user with the provided id exists.' }
+		#swagger.responses[401] = { description: 'Attempted to access the endpoint without authenticating.' }
+		#swagger.responses[403] = { description: 'Attempted to access the endpoint without matching authorization.' }
 	*/
 
 	catch(err) {
@@ -51,15 +57,17 @@ const getAllUsers = async(req, res, next) => {
 			description: 'Returns a list of all products.',
 			schema: [{
 				id: "000000000000000000000000",
-				name: "Sweatshirt",
-				description: "A classic everyday sweatshirt made from a soft, mid-weight cotton blend for all-day comfort. Designed with a relaxed fit, ribbed cuffs, and a durable finish that holds up to regular wear and washing. Perfect for layering or wearing on its own in any season.",
-				price: 1999,
-				inStock: "in",
-				discount: 10,
-				options: [["red", "blue", "gray", "black"], ["XS", "S", "M", "L", "XL", "XXL", "XXXL"]]
+				fname: "John",
+				lname: "Doe",
+				email: "user@example.com",
+				githubId: "00000000",
+				address: "123 example rd, anywhere US",
+				type: "customer"
 			}]
 		}
 		#swagger.responses[503] = { description: 'Server still turning on and not yet connected to database.' }
+		#swagger.responses[401] = { description: 'Attempted to access the endpoint without authenticating.' }
+		#swagger.responses[403] = { description: 'Attempted to access the endpoint without matching authorization.' }
 	*/
 	catch(err) {
 		if(err instanceof DBNotReadyError)
@@ -79,12 +87,11 @@ const createUser = async(req, res, next) => {
 		description: 'New information to update user record with.',
 		required: true,
 		schema: {
-			$name: "Sweatshirt",
-			$description: "A classic everyday sweatshirt made from a soft, mid-weight cotton blend for all-day comfort. Designed with a relaxed fit, ribbed cuffs, and a durable finish that holds up to regular wear and washing. Perfect for layering or wearing on its own in any season.",
-			$price: 1999,
-			$inStock: "in",
-			$discount: 10,
-			$options: [["red", "blue", "gray", "black"], ["XS", "S", "M", "L", "XL", "XXL", "XXXL"]]
+			$fname: "John",
+			$lname: "Doe",
+			$email: "user@example.com",
+			$githubId: "00000000",
+			$address: "123 example rd, anywhere US"
 		}
 	}
 	*/
@@ -104,8 +111,6 @@ const createUser = async(req, res, next) => {
 		}
 		#swagger.responses[503] = { description: 'Server still turning on and not yet connected to database.' }
 		#swagger.responses[400] = { description: 'Client did not provide sufficient data to create a user record or provided invalid data.' }
-		#swagger.responses[401] = { description: 'Attempted to access the endpoint without authenticating.' }
-		#swagger.responses[403] = { description: 'Attempted to access the endpoint without matching authorization.' }
 	*/
 	catch(err) {
 		if(err instanceof DBNotReadyError)
@@ -129,12 +134,11 @@ const updateUser = async(req, res, next) => {
 		description: 'New information to update user record with.',
 		required: true,
 		schema: {
-			$name: "Sweatshirt",
-			$description: "A classic everyday sweatshirt made from a soft, mid-weight cotton blend for all-day comfort. Designed with a relaxed fit, ribbed cuffs, and a durable finish that holds up to regular wear and washing. Perfect for layering or wearing on its own in any season.",
-			$price: 1999,
-			$inStock: "in",
-			$discount: 10,
-			$options: [["red", "blue", "gray", "black"], ["XS", "S", "M", "L", "XL", "XXL", "XXXL"]]
+			$fname: "John",
+			$lname: "Doe",
+			$email: "user@example.com",
+			$githubId: "00000000",
+			$address: "123 example rd, anywhere US"
 		}
 	}
 	*/
@@ -152,12 +156,12 @@ const updateUser = async(req, res, next) => {
 			description: 'User found and updated.',
 			schema: {
 				id: "000000000000000000000000",
-				name: "Sweatshirt",
-				description: "A classic everyday sweatshirt made from a soft, mid-weight cotton blend for all-day comfort. Designed with a relaxed fit, ribbed cuffs, and a durable finish that holds up to regular wear and washing. Perfect for layering or wearing on its own in any season.",
-				price: 1999,
-				inStock: "in",
-				discount: 10,
-				options: [["red", "blue", "gray", "black"], ["XS", "S", "M", "L", "XL", "XXL", "XXXL"]]
+				fname: "John",
+				lname: "Doe",
+				email: "user@example.com",
+				githubId: "00000000",
+				address: "123 example rd, anywhere US",
+				type: "customer"
 			}
 		}
 		#swagger.responses[503] = { description: 'Server still turning on and not yet connected to database.' }

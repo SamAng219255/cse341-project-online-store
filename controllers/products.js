@@ -1,4 +1,4 @@
-const model = require("../models/example");
+const productsModel = require("../models/example");
 const { DBNotReadyError, InvalidDataError, NotFoundError, ConflictingValueError } = require("../error_types");
 
 const getProductById = async(req, res, next) => {
