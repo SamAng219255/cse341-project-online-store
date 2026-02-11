@@ -54,4 +54,9 @@ const deleteUser = wrapReadyCheck(async id => {
   if (result.deletedCount < 1) throw new NotFoundError();
 });
 
-module.exports = { getAllUsers, getSingleUser, createUser, updateUser, deleteUser };
+const getSingleUserbyGithubId = wrapReadyCheck(async githubId => {
+  const result = await _model.findOne({ "oauth.githubId": githubId });
+  return result;
+});
+
+module.exports = { getAllUsers, getSingleUser, createUser, updateUser, deleteUser, getSingleUserbyGithubId };

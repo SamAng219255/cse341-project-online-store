@@ -8,6 +8,9 @@ const app = express();
 const bodyParser = require("body-parser");
 const apiRoutes = require("./routes/");
 const swaggerRoute = require("./routes/swagger");
+const passport = require("passport");
+const session = require("express-session");
+require("./config/passport");
 
 /* ***********************
  * Middleware
@@ -20,11 +23,22 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 // CORS middleware
 app.use(cors());
 
+// Session configuration
+app.use(session({
+	secret: process.env.SESSION_SECRET,
+	resave: false,
+	saveUninitialized: true
+}));
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Routes
 app.use(apiRoutes);
 app.use(swaggerRoute);
 
-app.use(async(req, res, next) => {
+app.use(async (req, res, next) => {
 	res.status(404).json({ message: "Unknown endpoint." });
 });
 
