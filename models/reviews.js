@@ -127,6 +127,7 @@ const deleteReview = wrapReadyCheck(async id => {
 });
 
 module.exports = {
+	reviewsModel: _model,
 	getAllReviews,
 	getReviewById,
 	createReview,

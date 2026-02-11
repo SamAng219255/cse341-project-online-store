@@ -146,6 +146,7 @@ const deleteProduct = wrapReadyCheck(async id => {
 });
 
 module.exports = {
+	productsModel: _model,
 	getAllProducts,
 	getProductById,
 	createProduct,

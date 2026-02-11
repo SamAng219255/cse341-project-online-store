@@ -1,10 +1,14 @@
 const mongoose = require("mongoose");
 const { DBNotReadyError } = require("../error_types");
+if(!process.env.MONGO_URI) require("dotenv").config();
 
 mongoose.Promise = global.Promise;
 
 let _ready = false;
 const isReady = () => {
+	if(process.env?.NODE_ENV === "test")
+		return true;
+
 	return _ready;
 };
 
@@ -27,7 +31,7 @@ const wrapReadyCheck = func => {
 mongoose
 	.connect(process.env.MONGO_URI)
 	.then(() => {
-		console.log("Connected to the database!");
+		if(process.env?.NODE_ENV !== "test") console.log("Connected to the database!");
 		_ready = true;
 		_onReady.forEach(func => func());
 	})
