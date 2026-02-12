@@ -6,6 +6,10 @@ const ObjectId = mongoose.Types.ObjectId;
 const _model = mongoose.model("orders", mongoose.Schema({
   itemIds: [String],
   customerId: String,
+  /*customerId: {
+  type: String,
+  required: true
+}*/
   productCount: {
     type: Number,
     validate: Number.isInteger
