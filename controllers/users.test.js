@@ -1,6 +1,6 @@
 const { Types: { ObjectId } } = require("mongoose");
 const { mongoose } = require("../database/");
-const usersModel = require("../models/users");
+const { usersModel } = require("../models/users");
 const usersController = require("./users");
 const TestRead = require("../TestRead");
 const { mockingoose } = require('mockingoose');
@@ -23,12 +23,8 @@ describe('test mongoose Users model', () => {
     mockingoose.resetAll();
   });
 
-  afterAll(async () => {
-    await mongoose.connection.close();
-  });
-
   new TestRead("should return the doc with getSingleUser", {
-    req: { id: testUserIdCorrect },
+    req: { userId: testUserIdCorrect },
     model: usersModel,
     readFuncName: "findOne",
     testFunc: usersController.getSingleUser,
@@ -36,7 +32,7 @@ describe('test mongoose Users model', () => {
   }).makeTest();
 
   new TestRead("should return a 404 error from getSingleUser", {
-    req: { id: testUserIdWrong },
+    req: { userId: testUserIdWrong },
     model: usersModel,
     readFuncName: "findOne",
     testFunc: usersController.getSingleUser,

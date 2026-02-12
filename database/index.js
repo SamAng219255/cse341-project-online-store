@@ -28,17 +28,18 @@ const wrapReadyCheck = func => {
 	};
 };
 
-mongoose
-	.connect(process.env.MONGO_URI)
-	.then(() => {
-		if(process.env?.NODE_ENV !== "test") console.log("Connected to the database!");
-		_ready = true;
-		_onReady.forEach(func => func());
-	})
-	.catch(err => {
-		console.log("Cannot connect to the database!", err);
-		process.exit();
-	});
+if(process.env?.NODE_ENV !== "test")
+	mongoose
+		.connect(process.env.MONGO_URI)
+		.then(() => {
+			if(process.env?.NODE_ENV !== "test") console.log("Connected to the database!");
+			_ready = true;
+			_onReady.forEach(func => func());
+		})
+		.catch(err => {
+			console.log("Cannot connect to the database!", err);
+			process.exit();
+		});
 
 module.exports = {
 	mongoose,

@@ -21,10 +21,6 @@ describe('test mongoose Reviews model', () => {
 		mockingoose.resetAll();
 	});
 
-	afterAll(async () => {
-		await mongoose.connection.close();
-	});
-
 	new TestRead("should return the doc with getReviewById", {
 		req: {
 			reviewId: testReviewIdCorrect

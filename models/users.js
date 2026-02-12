@@ -54,4 +54,4 @@ const deleteUser = wrapReadyCheck(async id => {
   if (result.deletedCount < 1) throw new NotFoundError();
 });
 
-module.exports = { getAllUsers, getSingleUser, createUser, updateUser, deleteUser };
+module.exports = { usersModel: _model, getAllUsers, getSingleUser, createUser, updateUser, deleteUser };

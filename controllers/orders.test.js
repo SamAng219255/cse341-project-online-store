@@ -1,6 +1,6 @@
 const { Types: { ObjectId } } = require("mongoose");
 const { mongoose } = require("../database/");
-const ordersModel = require("../models/orders");
+const { ordersModel } = require("../models/orders");
 const ordersController = require("./orders");
 const TestRead = require("../TestRead");
 const { mockingoose } = require('mockingoose');
@@ -19,10 +19,6 @@ describe('test mongoose Orders model', () => {
 
   beforeEach(() => {
     mockingoose.resetAll();
-  });
-
-  afterAll(async () => {
-    await mongoose.connection.close();
   });
 
   new TestRead("should return the doc with getSingleOrder", {
