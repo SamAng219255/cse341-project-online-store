@@ -37,8 +37,12 @@ app.use(passport.session());
 app.use(apiRoutes);
 app.use(swaggerRoute);
 
-app.use(async (req, res, next) => {
-	res.status(404).json({ message: "Unknown endpoint." });
+app.get("/", (req, res) => {
+  if (req.user) {
+    res.json({ message: "Logged in", user: req.user.username });
+  } else {
+    res.json({ message: "Not logged in" });
+  }
 });
 
 app.use((req, res) => {
