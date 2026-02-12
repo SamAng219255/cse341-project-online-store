@@ -52,4 +52,4 @@ const deleteOrder = wrapReadyCheck(async id => {
   if (result.deletedCount < 1) throw new NotFoundError();
 });
 
-module.exports = { getAllOrders, getSingleOrder, createOrder, updateOrder, deleteOrder };
+module.exports = { ordersModel: _model, getAllOrders, getSingleOrder, createOrder, updateOrder, deleteOrder };

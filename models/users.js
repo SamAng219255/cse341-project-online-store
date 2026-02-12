@@ -59,4 +59,4 @@ const getSingleUserbyGithubId = wrapReadyCheck(async githubId => {
   return result;
 });
 
-module.exports = { getAllUsers, getSingleUser, createUser, updateUser, deleteUser, getSingleUserbyGithubId };
+module.exports = { usersModel: _model, getAllUsers, getSingleUser, createUser, updateUser, deleteUser, getSingleUserbyGithubId };
