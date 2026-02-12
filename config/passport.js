@@ -18,6 +18,7 @@ passport.use(new GitHubStrategy({
                     provider: "github",
                     githubId: profile.id
                 },
+                address: "",
                 accountType: "customer",
             };
             const id = await userModel.createUser(newUser);

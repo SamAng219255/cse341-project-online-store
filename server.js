@@ -5,16 +5,13 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const session = require("express-session");
 const passport = require("passport");
-const GitHubStrategy = require("passport-github2").Strategy;
+const session = require("express-session");
 
 const app = express();
 
 const apiRoutes = require("./routes");
 const swaggerRoute = require("./routes/swagger");
-const passport = require("passport");
-const session = require("express-session");
 require("./config/passport");
 
 /* ***********************
