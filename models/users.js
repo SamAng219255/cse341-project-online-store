@@ -11,7 +11,7 @@ const _model = mongoose.model("users", mongoose.Schema({
   address: String,
   accountType: {
     type: String,
-    enum: ["customer", "employee", "subscription"]
+    enum: ["administrator", "customer", "employee", "subscription"]
   }
 }, { timestamps: true }));
 

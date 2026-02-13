@@ -40,7 +40,21 @@ const getSingleOrder = async (req, res) => {
 const getAllOrders = async (req, res) => {
   let data;
   try {
-    data = await ordersModel.getAllOrders();
+    const loggedUser = req.user;
+
+    // Admin o employee = ALL
+    if (
+      loggedUser.role === "employee" ||
+      loggedUser.role === "administrator"
+    ) {
+      data = await ordersModel.getAllOrders();
+    }
+    // Customer o subscription = only their orders
+    else {
+      data = await ordersModel.ordersModel.find({
+        customerId: loggedUser._id.toString()
+      });
+    }
   }
   /*
     #swagger.responses[200] = {
@@ -73,17 +87,23 @@ const createOrder = async (req, res) => {
       description: 'New order record.',
       required: true,
       schema: {
-        $itemIds: ["000000000000000000000001", "000000000000000000000002"],
-        $customerId: "0000000000000000000000AA",
-        $productCount: 2,
-        $orderDate: "2026-02-04T00:00:00.000Z"
+      $itemIds: ["000000000000000000000001", "000000000000000000000002"],
+      $productCount: 2,
+      $orderDate: "2026-02-04T00:00:00.000Z"
+        }
       }
     }
   */
   let id;
   try {
-    id = await ordersModel.createOrder(req.body);
-  }
+  console.log("Authenticated user:", req.user);//borrar despues solo es para revisión
+
+  const orderData = { ...req.body };
+
+  orderData.customerId = req.user._id.toString();
+
+  id = await ordersModel.createOrder(orderData);
+}
   /*
     #swagger.responses[201] = {
       description: 'Order successfully created.',
@@ -124,7 +144,9 @@ const updateOrder = async (req, res) => {
   let data;
   try {
     if (!req.params.orderId) throw new InvalidDataError();
-    data = await ordersModel.updateOrder(req.params.orderId, req.body);
+    const updateData = { ...req.body };//clone of body
+    delete updateData.customerId;//delete customerID if someone try to send
+    data = await ordersModel.updateOrder(req.params.orderId, updateData);
   }
   /*
     #swagger.responses[200] = {

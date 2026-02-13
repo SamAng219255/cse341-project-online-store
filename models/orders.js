@@ -4,8 +4,14 @@ const { InvalidDataError, NotFoundError } = require("../error_types");
 const ObjectId = mongoose.Types.ObjectId;
 
 const _model = mongoose.model("orders", mongoose.Schema({
-  itemIds: [String],
-  customerId: String,
+  itemIds: {
+  type: [String],
+  required: true
+  },
+  customerId: {
+  type: String,
+  required: true
+  },
   productCount: {
     type: Number,
     validate: Number.isInteger
