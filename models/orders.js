@@ -44,8 +44,9 @@ const createOrder = wrapReadyCheck(async data => {
 const updateOrder = wrapReadyCheck(async (id, data) => {
   let _id;
   try { _id = new ObjectId(id); } catch { throw new InvalidDataError(); }
-  if (!await _model.findById(_id)) throw new NotFoundError();
-  const cleaned = copyNeededKeys(data);
+  let retrievedOrder;
+  if (!(retrievedOrder = await _model.findById(_id))) throw new NotFoundError();
+  const cleaned = {...copyNeededKeys(data), customerId: retrievedOrder.customerId};
   await new mongoose.Document(cleaned, _model.schema).validate();
   await _model.updateOne({ _id }, cleaned);
   return await _model.findById(_id);

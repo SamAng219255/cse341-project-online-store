@@ -84,9 +84,6 @@ const createReview = async(req, res, next) => {
 	*/
 	let id;
 	try {
-		if(req.body.githubId && await reviewsModel.githubExists(req.body.githubId, req.params.id))
-			throw new ConflictingValueError();
-
 		id = await reviewsModel.createReview(req.body);
 	}
 	/*
@@ -134,8 +131,6 @@ const updateReview = async(req, res, next) => {
 	try {
 		if(req.params.reviewId == undefined)
 			throw new InvalidDataError();
-		if(req.body.githubId && await reviewsModel.githubExists(req.body.githubId, req.params.reviewId))
-			throw new ConflictingValueError();
 
 		data = await reviewsModel.updateReview(req.params.reviewId, req.body);
 	}

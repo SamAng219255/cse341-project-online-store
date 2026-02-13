@@ -18,8 +18,8 @@ const authorizeUserAccess = (req, res, next) => {
 
   // employee or administrator = full access (I'm not sure is we need to created the "adm", but in werever case...)
   if (
-    loggedUser.role === "employee" ||
-    loggedUser.role === "administrator"
+    loggedUser.accountType === "employee" ||
+    loggedUser.accountType === "administrator"
   ) {
     return next();
   }
@@ -27,10 +27,10 @@ const authorizeUserAccess = (req, res, next) => {
   // customer or subscription = only their own ID
   if (
     (
-      loggedUser.role === "customer" ||
-      loggedUser.role === "subscription"
+      loggedUser.accountType === "customer" ||
+      loggedUser.accountType === "subscription"
     ) &&
-    loggedUser._id.toString() === requestedUserId
+    loggedUser._id === requestedUserId
   ) {
     return next();
   }
@@ -52,8 +52,8 @@ const authorizeOrderAccess = async (req, res, next) => {
 
   // employee o administrator = acceso total
   if (
-    loggedUser.role === "employee" ||
-    loggedUser.role === "administrator"
+    loggedUser.accountType === "employee" ||
+    loggedUser.accountType === "administrator"
   ) {
     return next();
   }
@@ -66,7 +66,7 @@ const authorizeOrderAccess = async (req, res, next) => {
     }
 
     // customerId (String) = userID
-    if (order.customerId !== loggedUser._id.toString()) {
+    if (order.customerId !== loggedUser._id) {
       return res.status(403).json({ message: "Forbidden" });
     }
 

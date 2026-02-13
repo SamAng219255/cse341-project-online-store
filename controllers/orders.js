@@ -96,8 +96,6 @@ const createOrder = async (req, res) => {
   */
   let id;
   try {
-  console.log("Authenticated user:", req.user);//borrar despues solo es para revisión
-
   const orderData = { ...req.body };
 
   orderData.customerId = req.user._id.toString();
