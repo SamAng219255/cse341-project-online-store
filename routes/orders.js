@@ -1,11 +1,15 @@
+const router = require("express").Router();
+const ordersController = require("../controllers/orders");
+const { requireAuth, authorizeOrderAccess } = require("../middleware/auth");
 
-const router = require('express').Router();
-const ordersController = require('../controllers/orders');
+router.get("/", requireAuth, ordersController.getAllOrders);
 
-router.get('/', ordersController.getAllOrders);
-router.get('/:id', ordersController.getSingleOrder);
-router.post('/', ordersController.createOrder);
-router.put('/:id', ordersController.updateOrder);
-router.delete('/:id', ordersController.deleteOrder);
+router.get("/:orderId", requireAuth, authorizeOrderAccess, ordersController.getSingleOrder);
+
+router.post("/", requireAuth, ordersController.createOrder);
+
+router.put("/:orderId", requireAuth, authorizeOrderAccess, ordersController.updateOrder);
+
+router.delete("/:orderId", requireAuth, authorizeOrderAccess, ordersController.deleteOrder)
 
 module.exports = router;

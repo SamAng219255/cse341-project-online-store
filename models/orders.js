@@ -4,8 +4,14 @@ const { InvalidDataError, NotFoundError } = require("../error_types");
 const ObjectId = mongoose.Types.ObjectId;
 
 const _model = mongoose.model("orders", mongoose.Schema({
-  itemIds: [String],
-  customerId: String,
+  itemIds: {
+  type: [String],
+  required: true
+  },
+  customerId: {
+  type: String,
+  required: true
+  },
   productCount: {
     type: Number,
     validate: Number.isInteger
@@ -38,8 +44,9 @@ const createOrder = wrapReadyCheck(async data => {
 const updateOrder = wrapReadyCheck(async (id, data) => {
   let _id;
   try { _id = new ObjectId(id); } catch { throw new InvalidDataError(); }
-  if (!await _model.findById(_id)) throw new NotFoundError();
-  const cleaned = copyNeededKeys(data);
+  let retrievedOrder;
+  if (!(retrievedOrder = await _model.findById(_id))) throw new NotFoundError();
+  const cleaned = {...copyNeededKeys(data), customerId: retrievedOrder.customerId};
   await new mongoose.Document(cleaned, _model.schema).validate();
   await _model.updateOne({ _id }, cleaned);
   return await _model.findById(_id);
@@ -52,4 +59,4 @@ const deleteOrder = wrapReadyCheck(async id => {
   if (result.deletedCount < 1) throw new NotFoundError();
 });
 
-module.exports = { getAllOrders, getSingleOrder, createOrder, updateOrder, deleteOrder };
+module.exports = { ordersModel: _model, getAllOrders, getSingleOrder, createOrder, updateOrder, deleteOrder };

@@ -90,9 +90,6 @@ const createProduct = async(req, res, next) => {
 	*/
 	let id;
 	try {
-		if(req.body.githubId && await productsModel.githubExists(req.body.githubId, req.params.id))
-			throw new ConflictingValueError();
-
 		id = await productsModel.createProduct(req.body);
 	}
 	/*
@@ -142,8 +139,6 @@ const updateProduct = async(req, res, next) => {
 	try {
 		if(req.params.productId == undefined)
 			throw new InvalidDataError();
-		if(req.body.githubId && await productsModel.githubExists(req.body.githubId, req.params.productId))
-			throw new ConflictingValueError();
 
 		data = await productsModel.updateProduct(req.params.productId, req.body);
 	}

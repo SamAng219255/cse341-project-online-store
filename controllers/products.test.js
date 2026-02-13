@@ -23,10 +23,6 @@ describe('test mongoose Products model', () => {
 		mockingoose.resetAll();
 	});
 
-	afterAll(async () => {
-		await mongoose.connection.close();
-	});
-
 	new TestRead("should return the doc with getProductById", {
 		req: {
 			productId: testProductIdCorrect
