@@ -4,8 +4,8 @@ function match(value, condition, {
 } = {}) {
 	if (Object.is(value, condition))
 		return true;
-	if (Array.isArray(condition))
-		return condition.includes(value);
+	if (Array.isArray(condition) && condition.includes(value))
+		return true;
 
 	let conditionStack = [{ iterator: [condition][Symbol.iterator]() }];
 	for(let i = 0; i < maxDepth; i++) {
@@ -19,31 +19,36 @@ function match(value, condition, {
 		}
 		const currentCondition = step.value;
 
-		if(currentCondition != null && typeof currentCondition[Symbol.match] === 'function')
-			return currentCondition[Symbol.match](value);
-		if(typeof currentCondition === 'object' && typeof currentCondition.equals === 'function') {
-			return currentCondition.equals(value);
+		if(currentCondition != null && typeof currentCondition[Symbol.match] === 'function' && currentCondition[Symbol.match](value))
+			return true;
+		if(typeof currentCondition === 'object' && typeof currentCondition.equals === 'function' && currentCondition.equals(value)) {
+			return true;
 		}
 		if(typeof value === typeof currentCondition) {
 			if(typeof value === 'object' && partial) {
 				if(partial == 'value')
-					return Object.keys(value).every(key => match(value[key], currentCondition[key]), {
+					if(Object.keys(value).every(key => match(value[key], currentCondition[key]), {
 						partial,
 						maxDepth: maxDepth - i,
-					});
-				else
-					return Object.keys(currentCondition).every(key => match(value[key], currentCondition[key]), {
+					})) {
+						return true;
+					}
+				else {
+					if(Object.keys(currentCondition).every(key => match(value[key], currentCondition[key]), {
 						partial,
 						maxDepth: maxDepth - i,
-					});
+					})) {
+						return true;
+					}
+				}
 			}
-			else if(typeof value !== 'object' || value.constructor === currentCondition.constructor)
-				return Object.is(value, currentCondition);
+			else if((typeof value !== 'object' || value.constructor === currentCondition.constructor) && Object.is(value, currentCondition))
+				return true;
 			else if(Object.is(value, currentCondition))
 				return true;
 		}
-		if(currentCondition instanceof RegExp)
-			return currentCondition.test(value);
+		if(currentCondition instanceof RegExp && currentCondition.test(value))
+			return true;
 		if(typeof currentCondition === 'function') {
 			if(
 				typeof value === 'object' &&
@@ -53,8 +58,8 @@ function match(value, condition, {
 				))
 			)
 				return true;
-			else
-				return currentCondition(value);
+			else if(currentCondition(value))
+				return true;
 		}
 		if(currentCondition != null && typeof currentCondition !== 'string' && typeof currentCondition[Symbol.iterator] === 'function') {
 			conditionStack.unshift({iterator: currentCondition[Symbol.iterator]()});
