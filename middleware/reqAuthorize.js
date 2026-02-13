@@ -69,17 +69,12 @@ const reqAuthorize = ({
 	idMatchesParam = false,
 	accountTypeMatches = null,
 } = {}) => {
-	if(!mode == "every" && !mode == "any")
-		throw new RangeError("reqAuthorize: 'mode' must be one of 'any' or 'every'.");
+	if(mode != "every" && mode != "some")
+		throw new RangeError("reqAuthorize: 'mode' must be one of 'some' or 'every'.");
 
 	const requirements = [];
-	if(idMatchesParam) requirements.push((req, res) => req.params[idMatchesParam] == req.user.id);
-	if(accountTypeMatches != null) {
-		if(typeof accountTypeMatches[Symbol.iterator] === 'function')
-			requirements.push((req, res) => accountTypeMatches);
-		switch()
-		requirements.push((req, res) => req.params[idMatchesParam] == req.user.id);
-	}
+	if(idMatchesParam) requirements.push((req, res) => req.params[idMatchesParam] === req.user.id);
+	if(accountTypeMatches != null) requirements.push((req, res) => match(req.user.accountType, accountTypeMatches));
 
 	if(requirements.length == 0)
 		return (req, res, next) => {
@@ -101,4 +96,4 @@ const reqAuthorize = ({
 		};
 };
 
-module.exports =  { reqAuthorize };
+module.exports =  reqAuthorize;

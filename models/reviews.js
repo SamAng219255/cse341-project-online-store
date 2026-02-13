@@ -82,17 +82,19 @@ const createReview = wrapReadyCheck(async data => {
 	return _id.toString();
 });
 
-const updateReview = wrapReadyCheck(async(id, data) => {
+const updateReview = wrapReadyCheck(async(userId, id, data) => {
 	let _id;
+	let customer;
 	try {
 		_id = new ObjectId(id);
+		customer = new ObjectId(userId);
 	}
 	catch(err) {
 		console.error(`updateReview/ObjectId: ${err.name}: ${err.message}`);
 		throw new InvalidDataError();
 	}
 
-	if(await _model.findById(_id) == null)
+	if(await _model.findOne({ _id, customer }) == null)
 		throw new NotFoundError();
 
 	const cleanedData = copyNeededKeys(data);
@@ -110,17 +112,19 @@ const updateReview = wrapReadyCheck(async(id, data) => {
 	return await _model.findById(_id);
 });
 
-const deleteReview = wrapReadyCheck(async id => {
+const deleteReview = wrapReadyCheck(async (userId, id) => {
 	let _id;
+	let customer;
 	try {
 		_id = new ObjectId(id);
+		customer = new ObjectId(userId);
 	}
 	catch(err) {
 		console.error(`deleteReview/ObjectId: ${err.name}: ${err.message}`);
 		throw new InvalidDataError();
 	}
 
-	const result = await _model.deleteOne({ _id });
+	const result = await _model.deleteOne({ _id, customer });
 
 	if(result.deletedCount < 1)
 		throw new NotFoundError();
