@@ -132,7 +132,7 @@ const updateReview = async(req, res, next) => {
 		if(req.params.reviewId == undefined)
 			throw new InvalidDataError();
 
-		data = await reviewsModel.updateReview(req.params.reviewId, req.body);
+		data = await reviewsModel.updateReview(req.params.userId, req.params.reviewId, req.body);
 	}
 	/*
 		#swagger.responses[200] = {
@@ -173,7 +173,7 @@ const deleteReview = async(req, res, next) => {
 		if(req.params.reviewId == undefined)
 			throw new InvalidDataError();
 
-		await reviewsModel.deleteReview(req.params.reviewId);
+		await reviewsModel.deleteReview(req.params.userId, req.params.reviewId);
 	}
 	/*
 		#swagger.responses[204] = { description: 'Review found and deleted.' }

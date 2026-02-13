@@ -1,15 +1,34 @@
 const express = require("express");
 const router = express.Router();
 const reviewsController = require("../controllers/reviews");
+const reqAuthorize = require("../middleware/reqAuthorize");
 
-router.get("/", reviewsController.getAllReviews);
+router.get(
+	"/",
+	reviewsController.getAllReviews
+);
 
-router.post("/", reviewsController.createReview);
+router.post(
+	"/",
+	reqAuthorize(),
+	reviewsController.createReview
+);
 
-router.get("/:reviewId", reviewsController.getReviewById);
+router.get(
+	"/:reviewId",
+	reviewsController.getReviewById
+);
 
-router.put("/:reviewId", reviewsController.updateReview);
+router.put(
+	"/:userId/:reviewId",
+	reqAuthorize({idMatchesParam: "userId"}),
+	reviewsController.updateReview
+);
 
-router.delete("/:reviewId", reviewsController.deleteReview);
+router.delete(
+	"/:userId/:reviewId",
+	reqAuthorize({idMatchesParam: "userId"}),
+	reviewsController.deleteReview
+);
 
 module.exports = router;
