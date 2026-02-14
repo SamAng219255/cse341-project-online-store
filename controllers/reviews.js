@@ -75,7 +75,6 @@ const createReview = async(req, res, next) => {
 		description: 'New value to update review record with.',
 		required: true,
 		schema: {
-			$customer: "000000000000000000000000",
 			$product: "000000000000000000000000",
 			$stars: 4,
 			$body: "This product is really good and I highly reccomend it."

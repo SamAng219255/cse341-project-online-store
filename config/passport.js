@@ -24,6 +24,9 @@ passport.use(new GitHubStrategy({
             const id = await userModel.createUser(newUser);
             user = { ...newUser, id };
         }
+        else {
+            user.id = user._id.toString();
+        }
         return done(null, user);
     } catch (error) {
         return done(error, false);
