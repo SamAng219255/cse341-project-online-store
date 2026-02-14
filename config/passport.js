@@ -34,11 +34,21 @@ passport.use(new GitHubStrategy({
 }));
 
 passport.serializeUser((user, done) => {
-    done(null, user);
+    done(null, user._id);
 });
 
 passport.deserializeUser((user, done) => {
-    done(null, user);
+    try {
+        const user = await usersModel.getSingleUser(userId);
+
+        user.id = user._id.toString();
+
+        done(null, user);
+    }
+    catch(err) {
+        console.error(`deserializeUser: ${err.name}: ${err.message}`);
+        done(null, null);
+    }
 });
 
 module.exports = passport;
