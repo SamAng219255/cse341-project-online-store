@@ -84,7 +84,7 @@ const createReview = async(req, res, next) => {
 	*/
 	let id;
 	try {
-		id = await reviewsModel.createReview({...req.body, customer: new ObjectId(req.user.id)});
+		id = await reviewsModel.createReview({...req.body, customer: req.user.id});
 	}
 	/*
 		#swagger.responses[201] = {
