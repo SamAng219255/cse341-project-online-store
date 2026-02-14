@@ -39,7 +39,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (user, done) => {
     try {
-        const user = await usersModel.getSingleUser(userId);
+        const user = await userModel.getSingleUser(userId);
 
         user.id = user._id.toString();
 
