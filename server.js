@@ -39,7 +39,7 @@ app.use(swaggerRoute);
 
 app.get("/", (req, res) => {
   if (req.user) {
-    res.json({ message: "Logged in", user: req.user.username });
+    res.json({ message: "Logged in", user: req.user.id });
   } else {
     res.json({ message: "Not logged in" });
   }
