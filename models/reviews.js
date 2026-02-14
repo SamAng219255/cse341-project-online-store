@@ -72,6 +72,15 @@ const createReview = wrapReadyCheck(async data => {
 	const _id = new ObjectId();
 
 	try {
+		data.customer = new ObjectId(data.customer);
+		data.product = new ObjectId(data.product);
+	}
+	catch(err) {
+		console.error(`createReview/ObjectId: ${err.name}: ${err.message}`);
+		throw new InvalidDataError();
+	}
+
+	try {
 		await _model.create({ _id, ...copyNeededKeys(data) }); // Data is automatically validated against the schema
 	}
 	catch(err) {
@@ -88,6 +97,8 @@ const updateReview = wrapReadyCheck(async(userId, id, data) => {
 	try {
 		_id = new ObjectId(id);
 		customer = new ObjectId(userId);
+		if(data.customer) data.customer = customer;
+		if(data.product) data.product = new ObjectId(data.product);
 	}
 	catch(err) {
 		console.error(`updateReview/ObjectId: ${err.name}: ${err.message}`);
