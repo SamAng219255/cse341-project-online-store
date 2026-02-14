@@ -34,10 +34,10 @@ passport.use(new GitHubStrategy({
 }));
 
 passport.serializeUser((user, done) => {
-    done(null, user._id);
+    done(null, user.id);
 });
 
-passport.deserializeUser(async (user, done) => {
+passport.deserializeUser(async (userId, done) => {
     try {
         const user = await userModel.getSingleUser(userId);
 
